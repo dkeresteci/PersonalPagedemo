@@ -1,5 +1,7 @@
 jQuery(document).ready(function($){
 
+	var sendingLocation = 'http://expresstestdk.herokuapp.com/email';
+
 	var nameDefault = 'Your name...';
 	var emailDefault = 'Your email...';
 	var messageDefault = 'Your message...';
@@ -98,7 +100,7 @@ jQuery(document).ready(function($){
 	$("#form-contact").ajaxForm({
 		beforeSubmit: validateContact,
 		type: "POST",
-		url: "http://posttestserver.com/post.php",			//"assets/php/contact-form-process.php",
+		url: sendingLocation,			//"assets/php/contact-form-process.php",
 		// data: ,
 		success: function(msg){
 			result = '<span class="form-message-success"><i class="icon-thumbs-up"></i> Your message was sent. Thank you!</span>';
