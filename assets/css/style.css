@@ -309,6 +309,8 @@ input.error, textarea.error {
 #profile .bullet { color: #4081a3; }
 #profile a { color: #4081a3; }
 
+#profile a:hover { color: #72B0D1; }
+
 .social-links {
 	margin: 0;
 	padding: 0;
