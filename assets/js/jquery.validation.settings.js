@@ -1,7 +1,5 @@
 jQuery(document).ready(function($){
 
-	var sendingLocation = 'http://expresstestdk.herokuapp.com/email';
-
 	var nameDefault = 'Your name...';
 	var emailDefault = 'Your email...';
 	var messageDefault = 'Your message...';
@@ -100,19 +98,28 @@ jQuery(document).ready(function($){
 	$("#form-contact").ajaxForm({
 		beforeSubmit: validateContact,
 		type: "POST",
-		url: sendingLocation,			//"assets/php/contact-form-process.php",
-		// data: ,
+		url: "assets/php/contact-form-process.php",
+		data: $("#form-contact").serialize(),
 		success: function(msg){
-			result = '<span class="form-message-success"><i class="icon-thumbs-up"></i> Your message was sent. Thank you!</span>';
+			$("#form-message").ajaxComplete(function(event, request, settings){
+				if(msg == 'OK') // Message Sent? Show the 'Thank You' message
+				{
+					result = '<span class="form-message-success"><i class="icon-thumbs-up"></i> Your message was sent. Thank you!</span>';
+					clear = true;
+				}
+				else
+				{
+					result = '<span class="form-message-error"><i class="icon-thumbs-down"></i> ' + msg +'</span>';
+					clear = false;
+				}
+				$(this).html(result);
 
-			console.log(msg);
-			$("#emailresponse").html(result);
-			$("#form-contact").clearForm();
-		},
-		error: function(er){
-			result = '<span class="form-message-error"><i class="icon-thumbs-down"></i> ' + "Unable to submit email Error:" + er +'</span>';
-			$("#emailresponse").html(result);
-			console.log(er);
+				if(clear == true) {
+					$('#name').val('');
+					$('#email').val('');
+					$('#message').val('');
+				}
+			});
 		}
 	});
 });
